@@ -8,7 +8,7 @@ class BigbluebuttonServer < ActiveRecord::Base
            foreign_key: 'server_id',
            dependent: :destroy
 
-  has_one :config,
+  has_one :config_record,
           class_name: 'BigbluebuttonServerConfig',
           foreign_key: 'server_id',
           dependent: :destroy
@@ -60,11 +60,9 @@ class BigbluebuttonServer < ActiveRecord::Base
     Resque.enqueue(::BigbluebuttonUpdateRecordingsWorker, self.id)
   end
 
-  # In case there's no config created yet, build one.
-  def config_with_initialize
-    config_without_initialize || build_config(server: self)
+  def config
+    config_record || build_config(server: self)
   end
-  alias_method_chain :config, :initialize
 
   # Helper to get the default server
   def self.default
