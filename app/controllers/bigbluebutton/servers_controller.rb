@@ -18,6 +18,10 @@ class Bigbluebutton::ServersController < ApplicationController
     respond_with(@server)
   end
 
+  def rooms
+    respond_with(@server.rooms)
+  end
+
   def edit
     respond_with(@server)
   end
