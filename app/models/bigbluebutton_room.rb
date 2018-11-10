@@ -212,6 +212,8 @@ class BigbluebuttonRoom < ActiveRecord::Base
     user_opts = BigbluebuttonRails.configuration.get_create_options.call(self, user)
     user_opts = {} if user_opts.blank?
 
+    user_opts['customLogoURL'] = "https://coursedy.com/favicon.ico"
+
     server, response = internal_create_meeting(user, user_opts)
     unless response.nil?
       self.attendee_api_password = response[:attendeePW]
